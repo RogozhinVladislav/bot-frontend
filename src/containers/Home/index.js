@@ -1,7 +1,19 @@
 import React from 'react'
 import { Route, Switch, Link, useRouteMatch, useParams } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-const { Header, Content, Footer } = Layout
+import {
+  Layout,
+  Menu,
+  Breadcrumb,
+  Icon,
+  PageHeader,
+  Tabs,
+  Button,
+  Statistic,
+  Descriptions,
+} from 'antd'
+const { Content, Footer, Sider } = Layout
+
+import Header from '@/components/header'
 
 import Commands from '../Commands'
 import Interactions from '../Interactions'
@@ -10,14 +22,24 @@ export default function Home() {
   let { path, url } = useRouteMatch()
   return (
     <Layout>
-      <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={broken => {
+          console.log(broken)
+        }}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type)
+        }}
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+        }}
+      >
         <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          // defaultSelectedKeys={["2"]}
-          style={{ lineHeight: '64px' }}
-        >
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
           <Menu.Item key="1">
             <Icon type="home" />
             Главная
@@ -36,16 +58,19 @@ export default function Home() {
             <Link to="/interactions" />
           </Menu.Item>
         </Menu>
-      </Header>
-      <Content style={{ padding: '0 50px', marginTop: 64 }}>
-        <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
-          <Switch>
-            <Route path="/commands" component={Commands} />
-            <Route path="/interactions" component={Interactions} />
-          </Switch>
-        </div>
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </Sider>
+      <Layout style={{ marginLeft: 200 }}>
+        <Header />
+        <Content style={{ padding: '0 50px', marginTop: 64 }}>
+          <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
+            <Switch>
+              <Route path="/commands" component={Commands} />
+              <Route path="/interactions" component={Interactions} />
+            </Switch>
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </Layout>
     </Layout>
   )
 }

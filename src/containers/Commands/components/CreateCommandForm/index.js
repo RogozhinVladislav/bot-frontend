@@ -1,16 +1,14 @@
-import React from 'react'
-import http from '@/utils/http'
+import React, { useContext } from 'react'
 import { Form, Input, Button } from 'antd'
 
-function CreateCommandForm({ form }) {
+function CreateCommandForm({ form, createCommand, command }) {
   const { getFieldDecorator, validateFields } = form
 
   const handleSubmit = async e => {
     e.preventDefault()
-    validateFields(async (err, values) => {
+    validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
-        const result = await http.post('/api/commands', values)
+        createCommand(values)
       }
     })
   }

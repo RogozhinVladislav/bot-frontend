@@ -11,6 +11,9 @@ const stores = {
   CommandsStore: mainStore.CommandsStore,
 }
 
+import 'antd/dist/antd.css'
+import './styles/index.css'
+
 ReactDOM.render(
   <Provider {...stores}>
     <App />

@@ -4,34 +4,29 @@ import { observer, inject } from 'mobx-react'
 import List from './components/List'
 import CreateCommandForm from './components/CreateCommandForm'
 import Command from './components/Command'
-import http from '@/utils/http'
 
 import CommandsStore from '@/stores/CommandsStore'
 
 const Commands = observer(props => {
   let { path } = useRouteMatch()
-  const [data, setData] = useState([])
   const store = useContext(CommandsStore)
 
   useEffect(() => {
-    const fetchData = async () => {
-      store.fetchCommands()
-    }
-    fetchData()
+    store.fetchCommands()
   }, [])
 
   return (
     <div>
       <h1>Создание команды</h1>
-      <CreateCommandForm />
-      <List commands={store.commands} />
+      <CreateCommandForm createCommand={store.createCommand} />
+      <List commands={store.commands} deleteCommand={store.deleteCommand} />
 
       <Switch>
         <Route exact path={path}>
           <h3>Please select a topic.</h3>
         </Route>
         <Route path={`${path}/:commandId`}>
-          <Command />
+          <Command commands={store.commands} />
         </Route>
       </Switch>
     </div>

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Modal, Button } from 'antd'
 
-export default function Command() {
-  let history = useHistory()
+import CreateCommandForm from '../CreateCommandForm'
+
+export default function Command({ commands }) {
+  const history = useHistory()
+  const { id } = useParams()
+
+  const command = commands.find(cmd => cmd._id === Number(id))
 
   const handleOk = e => {
     console.log(e)
@@ -24,9 +29,7 @@ export default function Command() {
       // okButtonProps={{ disabled: true }}
       // cancelButtonProps={{ disabled: true }}
     >
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
+      <CreateCommandForm createCommand={store.createCommand} command={command} />
     </Modal>
   )
 }

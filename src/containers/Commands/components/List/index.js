@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
-import { List, Skeleton, Switch, Meta, Card, Icon, Avatar } from 'antd'
+import { List, Icon, Popconfirm } from 'antd'
 
-export default function CommandList({ commands }) {
+export default function CommandList({ commands, deleteCommand }) {
   let { path, url } = useRouteMatch()
   let history = useHistory()
   return (
@@ -12,13 +12,30 @@ export default function CommandList({ commands }) {
       renderItem={command => (
         <List.Item
           actions={[
-            <Icon type="setting" key="setting" />,
-            <Icon type="edit" key="edit" />,
-            <Icon type="ellipsis" key="ellipsis" />,
+            <Icon
+              type="setting"
+              key="setting"
+              onClick={() => {
+                history.push(`${path}/${command._id}`)
+              }}
+            />,
+            <Icon
+              type="edit"
+              key="edit"
+              onClick={() => {
+                history.push(`${path}/${command._id}`)
+              }}
+            />,
+            <Popconfirm
+              title="Удалить выбранную команду?"
+              onConfirm={() => deleteCommand(command._id)}
+              onCancel={() => {}}
+              okText="Да"
+              cancelText="Нет"
+            >
+              <Icon type="delete" key="delete" />
+            </Popconfirm>,
           ]}
-          onClick={() => {
-            history.push(`${path}/${command._id}`)
-          }}
         >
           <div>Команда: {command.trigger}</div>
           <div>Ответ: {command.answer}</div>
