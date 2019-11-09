@@ -46,7 +46,10 @@ export class CommandsStore {
       const result = await api.update(payload)
       runInAction(() => {
         this.state = 'done'
-        this.commands = [...this.commands, result.data]
+        this.commands = [
+          ...this.commands.filter(command => command._id !== payload.commandId),
+          result.data,
+        ]
       })
     } catch (error) {
       runInAction(() => {

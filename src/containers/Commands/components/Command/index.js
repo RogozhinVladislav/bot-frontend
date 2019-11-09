@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Modal, Button } from 'antd'
 
-import CreateCommandForm from '../CreateCommandForm'
+import CommandForm from '../CommandForm'
 
-export default function Command({ commands }) {
+export default function Command({ commands, updateCommand }) {
   const history = useHistory()
-  const { id } = useParams()
+  const { commandId } = useParams()
+  const [visible, setVisible] = useState()
 
-  const command = commands.find(cmd => cmd._id === Number(id))
+  const command = commands.find(cmd => cmd._id === commandId)
 
   const handleOk = e => {
-    console.log(e)
     setVisible(false)
   }
 
@@ -22,14 +22,14 @@ export default function Command({ commands }) {
 
   return (
     <Modal
-      title="Basic Modal"
+      title="Команда"
       visible={true}
       onOk={handleOk}
       onCancel={handleCancel}
       // okButtonProps={{ disabled: true }}
       // cancelButtonProps={{ disabled: true }}
     >
-      <CreateCommandForm createCommand={store.createCommand} command={command} />
+      <CommandForm updateCommand={updateCommand} command={command} handleOk={handleOk} />
     </Modal>
   )
 }

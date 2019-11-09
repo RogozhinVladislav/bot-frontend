@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import List from './components/List'
-import CreateCommandForm from './components/CreateCommandForm'
+import CommandForm from './components/CommandForm'
 import Command from './components/Command'
 
 import CommandsStore from '@/stores/CommandsStore'
@@ -18,7 +18,7 @@ const Commands = observer(props => {
   return (
     <div>
       <h1>Создание команды</h1>
-      <CreateCommandForm createCommand={store.createCommand} />
+      <CommandForm createCommand={store.createCommand} />
       <List commands={store.commands} deleteCommand={store.deleteCommand} />
 
       <Switch>
@@ -26,7 +26,7 @@ const Commands = observer(props => {
           <h3>Please select a topic.</h3>
         </Route>
         <Route path={`${path}/:commandId`}>
-          <Command commands={store.commands} />
+          <Command updateCommand={store.updateCommand} commands={store.commands} />
         </Route>
       </Switch>
     </div>

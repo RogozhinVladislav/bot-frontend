@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import List from './components/List'
-import CreateCommandForm from './components/CreateInteractionForm'
+import CommandForm from './components/CreateInteractionForm'
 import http from '@/utils/http'
 
 export default function interaction() {
@@ -18,7 +18,7 @@ export default function interaction() {
   return (
     <div>
       <h1>Создание взаимодействия</h1>
-      <CreateCommandForm />
+      <CommandForm />
       <List commands={data} />
     </div>
   )
