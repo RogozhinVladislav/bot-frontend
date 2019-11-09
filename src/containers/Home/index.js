@@ -1,22 +1,14 @@
 import React from 'react'
 import { Route, Switch, Link, useRouteMatch, useParams } from 'react-router-dom'
-import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Icon,
-  PageHeader,
-  Tabs,
-  Button,
-  Statistic,
-  Descriptions,
-} from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 const { Content, Footer, Sider } = Layout
 
 import Header from '@/components/header'
 
 import Commands from '../Commands'
 import Interactions from '../Interactions'
+
+import styles from './styles'
 
 export default function Home() {
   let { path, url } = useRouteMatch()
@@ -38,7 +30,7 @@ export default function Home() {
           left: 0,
         }}
       >
-        <div className="logo" />
+        <div css={styles.logo} />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
           <Menu.Item key="1">
             <Icon type="home" />
