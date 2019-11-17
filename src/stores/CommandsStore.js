@@ -80,5 +80,3 @@ decorate(CommandsStore, {
   fetchCommands: action,
   createCommand: action,
 })
-
-export default createContext(new CommandsStore())

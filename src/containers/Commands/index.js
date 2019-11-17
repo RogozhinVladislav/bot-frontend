@@ -5,28 +5,28 @@ import List from './components/List'
 import CommandForm from './components/CommandForm'
 import Command from './components/Command'
 
-import CommandsStore from '@/stores/CommandsStore'
+import { useStores } from '@/hooks'
 
 const Commands = observer(props => {
   let { path } = useRouteMatch()
-  const store = useContext(CommandsStore)
+  const { commandsStore } = useStores()
 
   useEffect(() => {
-    store.fetchCommands()
+    commandsStore.fetchCommands()
   }, [])
 
   return (
     <div>
       <h1>Создание команды</h1>
-      <CommandForm createCommand={store.createCommand} />
-      <List commands={store.commands} deleteCommand={store.deleteCommand} />
+      <CommandForm createCommand={commandsStore.createCommand} />
+      <List commands={commandsStore.commands} deleteCommand={commandsStore.deleteCommand} />
 
       <Switch>
         <Route exact path={path}>
           <h3>Please select a topic.</h3>
         </Route>
         <Route path={`${path}/:commandId`}>
-          <Command updateCommand={store.updateCommand} commands={store.commands} />
+          <Command updateCommand={commandsStore.updateCommand} commands={commandsStore.commands} />
         </Route>
       </Switch>
     </div>

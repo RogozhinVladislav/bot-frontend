@@ -9,8 +9,8 @@ export default function App() {
     <Router>
       <Switch>
         {/* <Redirect exact from="/" to={Login} /> */}
-        <Route path="/" component={Home} />
         <Route path="/login" component={Login} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   )
