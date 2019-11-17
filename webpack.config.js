@@ -17,6 +17,7 @@ module.exports = {
     watchContentBase: true,
     progress: true,
   },
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: 'dist/index.html',
