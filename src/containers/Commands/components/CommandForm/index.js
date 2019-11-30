@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
-import { Form, Input, Button } from 'antd'
+import React, { useState } from 'react'
+import { Form, Input, Button, Upload, Icon } from 'antd'
 
 function CommandForm({ form, createCommand, updateCommand, command }) {
   const { getFieldDecorator, validateFields } = form
+  const [fileList, setFileList] = useState([])
 
   const submit = () => {
     validateFields((err, values) => {
@@ -13,15 +14,44 @@ function CommandForm({ form, createCommand, updateCommand, command }) {
             command: values,
           })
         } else {
-          createCommand(values)
+          const formData = new FormData()
+          fileList.forEach(file => {
+            formData.append('file', file)
+          })
+          for ( const key in values ) {
+            formData.append(key, values[key]);
+          }
+          createCommand(formData)
         }
       }
     })
   }
 
+  const uploadProps = {
+    onRemove: file => {
+      setFileList(state => {
+        {
+          const index = state.fileList.indexOf(file)
+          const newFileList = state.fileList.slice()
+          newFileList.splice(index, 1)
+          return {
+            fileList: newFileList,
+          }
+        }
+      })
+    },
+    beforeUpload: file => {
+      setFileList(state => {
+        return [...state, file]
+      })
+      return false
+    },
+    fileList,
+  }
+
   const handleSubmit = e => {
     e.preventDefault()
-    submit();
+    submit()
   }
 
   return (
@@ -47,6 +77,13 @@ function CommandForm({ form, createCommand, updateCommand, command }) {
             },
           ],
         })(<Input size="large" placeholder="Ответ" />)}
+      </Form.Item>
+      <Form.Item>
+        <Upload {...uploadProps}>
+          <Button>
+            <Icon type="upload" /> Click to Upload
+          </Button>
+        </Upload>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
