@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Form, Input, Button, Upload, Icon } from 'antd'
 
+const allowedImageTypes = ['image/png', 'image/jpg', 'image/jpeg']
+const allowedAudioTypes = ['audio/mp3']
+
 function CommandForm({ form, createCommand, updateCommand, command }) {
   const { getFieldDecorator, validateFields } = form
   const [fileList, setFileList] = useState([])
@@ -16,7 +19,11 @@ function CommandForm({ form, createCommand, updateCommand, command }) {
         } else {
           const formData = new FormData()
           fileList.forEach(file => {
-            formData.append('file', file)
+            if (allowedImageTypes.includes(file.type)) {
+              formData.append('image', file)
+            } else if (allowedAudioTypes.includes(file.type)) {
+              formData.append('audio', file)
+            }
           })
           for ( const key in values ) {
             formData.append(key, values[key]);
