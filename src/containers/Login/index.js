@@ -3,14 +3,19 @@ import { Form, Icon, Input, Button, Checkbox, Typography  } from 'antd'
 
 const { Title } = Typography;
 
+import { useStores } from '@/hooks'
+
 import styles from './styles'
 
 function Login({ form }) {
+  const { authStore } = useStores()
+  const { loading } = authStore;
   const { getFieldDecorator, validateFields } = form
 
   const submit = () => {
     validateFields((err, values) => {
       if (!err) {
+        authStore.login(values)
       }
     })
   }
@@ -53,7 +58,7 @@ function Login({ form }) {
           <a css={styles.forgotPassword} href="">
             Забыли пароль?
           </a>
-          <Button type="primary" htmlType="submit" css={styles.submitButton}>
+          <Button type="primary" htmlType="submit" css={styles.submitButton} disabled={loading}>
             Войти
           </Button>
           <div>

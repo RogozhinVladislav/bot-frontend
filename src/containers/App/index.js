@@ -1,17 +1,12 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-
-import Home from '../Home'
-import Login from '../Login'
+import { BrowserRouter as Router } from 'react-router-dom'
+import {useRoutes} from '../../routes'
 
 export default function App() {
+  const routes = useRoutes(true)
   return (
     <Router>
-      <Switch>
-        {/* <Redirect exact from="/" to={Login} /> */}
-        <Route path="/login" component={Login} />
-        <Route path="/" component={Home} />
-      </Switch>
+      {routes}
     </Router>
   )
 }
