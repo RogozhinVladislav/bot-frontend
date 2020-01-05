@@ -1,20 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { Form, Icon, Input, Button, Checkbox, Typography, Tooltip } from 'antd'
 const { Title } = Typography
-import { useStores } from '@/hooks'
+import { useStores, useMessage } from '@/hooks'
 import styles from './styles'
+import { Link } from 'react-router-dom'
 
 const Register = observer(({ form }) => {
+  const history = useHistory()
   const { authStore } = useStores()
-  const { loading } = authStore
+  const { loading, error, successMessage } = authStore
   const { getFieldDecorator, validateFields } = form
-  const [setConfirmDirty, confirmDirty] = useState(false)
+  const [confirmDirty, setConfirmDirty] = useState(false)
+  const showMessage = useMessage()
+
+  useEffect(() => {
+    showMessage('error', error)
+  }, [error])
+
+  useEffect(() => {
+    showMessage('success', successMessage)
+  }, [successMessage])
 
   const submit = () => {
     validateFields((err, values) => {
       if (!err) {
-        authStore.register(values)
+        authStore.register({ values, onSuccess: () => {
+          history.push("/login");
+        } })
       }
     })
   }
@@ -26,23 +40,23 @@ const Register = observer(({ form }) => {
 
   const validateToNextPassword = (rule, value, callback) => {
     if (value && confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirm'], { force: true })
     }
-    callback();
-  };
+    callback()
+  }
 
   const handleConfirmBlur = e => {
-    const { value } = e.target;
-    setConfirmDirty(confirmDirty || !!value )
-  };
+    const { value } = e.target
+    setConfirmDirty(confirmDirty || !!value)
+  }
 
   const compareToFirstPassword = (rule, value, callback) => {
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('Введённые пароли не совпадают!')
     } else {
-      callback();
+      callback()
     }
-  };
+  }
 
   return (
     <div css={styles.page}>
@@ -86,7 +100,7 @@ const Register = observer(({ form }) => {
                 validator: compareToFirstPassword,
               },
             ],
-          })(<Input.Password onBlur={(e) => handleConfirmBlur(e)} />)}
+          })(<Input.Password onBlur={e => handleConfirmBlur(e)} />)}
         </Form.Item>
 
         <Form.Item
@@ -100,7 +114,13 @@ const Register = observer(({ form }) => {
           }
         >
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Пожалуйста, введите имя пользователя!', whitespace: true }],
+            rules: [
+              {
+                required: true,
+                message: 'Пожалуйста, введите имя пользователя!',
+                whitespace: true,
+              },
+            ],
           })(<Input />)}
         </Form.Item>
         <Form.Item>
@@ -112,13 +132,13 @@ const Register = observer(({ form }) => {
             Зарегистрироваться
           </Button>
           <div>
-            Или <a href="">войти!</a>
+            Или <Link to="login">войти!</Link>
           </div>
         </Form.Item>
       </Form>
     </div>
   )
-});
+})
 
 const WrappedRegister = Form.create({ name: 'Register' })(Register)
 

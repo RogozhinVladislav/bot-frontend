@@ -8,6 +8,7 @@ export const useRoutes = isAuthenticated => {
   if (isAuthenticated) {
     return (
       <Switch>
+        <Redirect exact from="/login" to="/" />
         <Route path="/" component={Home} />
       </Switch>
     )
@@ -16,7 +17,8 @@ export const useRoutes = isAuthenticated => {
   return (
     <Switch>
       <Redirect exact from="/" to="/login" />
-      <Route path="/login" component={Register} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
     </Switch>
   )
 }

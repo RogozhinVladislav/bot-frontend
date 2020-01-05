@@ -4,23 +4,24 @@ import * as api from 'Api/auth'
 export class AuthStore {
   constructor() {}
 
-  state = {}
+  successMessage = {}
   loading = false
   error = {}
 
   register = async payload => {
     this.loading = true
     try {
-      const result = await api.register(payload)
-      debugger
+      const { values, onSuccess } = payload;
+      const result = await api.register(values)
       runInAction(() => {
         this.loading = false
-        this.state = result.data
+        this.successMessage = result.data.message
+        onSuccess()
       })
-    } catch (error) {
+    } catch (err) {
       runInAction(() => {
         this.loading = false
-        this.error = error
+        this.error = err.response.data
       })
     }
   }
@@ -28,22 +29,25 @@ export class AuthStore {
   login = async payload => {
     this.loading = true
     try {
-      const result = await api.login(payload)
+      const { values, authLogin } = payload;
+      const result = await api.login(values)
       runInAction(() => {
         this.loading = false
-        this.state = result.data
+        this.successMessage = result.data.message
+        const { token, userId } = result.data
+        authLogin(token, userId)
       })
-    } catch (error) {
+    } catch (err) {
       runInAction(() => {
         this.loading = false
-        this.error = error
+        this.error = err.response.data
       })
     }
   }
 }
 
 decorate(AuthStore, {
-  state: observable,
+  successMessage: observable,
   loading: observable,
   register: action,
   login: action,

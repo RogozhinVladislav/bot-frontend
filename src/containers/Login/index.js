@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox, Typography  } from 'antd'
-
 const { Title } = Typography;
 
 import { useStores } from '@/hooks'
+import { AuthContext } from '@/contexts/auth-context'
 
 import styles from './styles'
 
 function Login({ form }) {
   const { authStore } = useStores()
+  const auth = useContext(AuthContext)
   const { loading } = authStore;
   const { getFieldDecorator, validateFields } = form
 
   const submit = () => {
     validateFields((err, values) => {
       if (!err) {
-        authStore.login(values)
+        authStore.login({values, authLogin: auth.login })
       }
     })
   }
@@ -30,7 +32,7 @@ function Login({ form }) {
       <Title level={2}>Авторизация</Title>
       <Form onSubmit={handleSubmit} css={styles.form}>
         <Form.Item>
-          {getFieldDecorator('username', {
+          {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Пожалуйста, введите имя пользователя' }],
           })(
             <Input
@@ -62,7 +64,7 @@ function Login({ form }) {
             Войти
           </Button>
           <div>
-            Или <a href="">зарегистрироваться!</a>
+            Или <Link to="/register">зарегистрироваться!</Link>
           </div>
         </Form.Item>
       </Form>
