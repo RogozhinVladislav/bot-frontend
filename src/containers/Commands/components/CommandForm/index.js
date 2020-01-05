@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Input, Button, Upload, Icon } from 'antd'
+import { CommandsContext } from '@/contexts'
 
 const allowedImageTypes = ['image/png', 'image/jpg', 'image/jpeg']
 const allowedAudioTypes = ['audio/mp3']
 
-function CommandForm({ form, createCommand, updateCommand, command }) {
+function CommandForm({ form, command }) {
   const { getFieldDecorator, validateFields } = form
   const [fileList, setFileList] = useState([])
+  const { createCommand, updateCommand } = useContext(CommandsContext)
 
   const submit = () => {
     validateFields((err, values) => {
@@ -25,8 +27,8 @@ function CommandForm({ form, createCommand, updateCommand, command }) {
               formData.append('audio', file)
             }
           })
-          for ( const key in values ) {
-            formData.append(key, values[key]);
+          for (const key in values) {
+            formData.append(key, values[key])
           }
           createCommand(formData)
         }

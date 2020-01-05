@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Modal, Button } from 'antd'
 
 import CommandForm from '../CommandForm'
+import { CommandsContext } from '@/contexts'
 
-export default function Command({ commands, updateCommand }) {
+export default function Command() {
   const history = useHistory()
   const { commandId } = useParams()
   const [visible, setVisible] = useState()
+  const { commands, updateCommand } = useContext(CommandsContext)
 
   const command = commands.find(cmd => cmd._id === commandId)
 

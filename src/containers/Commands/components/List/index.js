@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { List, Icon, Popconfirm } from 'antd'
+import { CommandsContext } from '@/contexts'
 
-export default function CommandList({ commands, deleteCommand }) {
+export default function CommandList() {
   let { path, url } = useRouteMatch()
   let history = useHistory()
+  const { commands, deleteCommand } = useContext(CommandsContext)
   return (
     <List
       itemLayout="vertical"
