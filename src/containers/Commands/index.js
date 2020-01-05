@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import List from './components/List'
 import CommandForm from './components/CommandForm'
 import Command from './components/Command'

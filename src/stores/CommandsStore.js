@@ -1,4 +1,3 @@
-import { createContext } from 'react'
 import { decorate, observable, action, runInAction } from 'mobx'
 import * as api from 'Api/commands'
 
@@ -6,46 +5,48 @@ export class CommandsStore {
   constructor() {}
 
   commands = []
-  state = 'pending'
+  loading = false
+  error = {}
 
   fetchCommands = async () => {
-    this.state = 'pending'
+    this.loading = true
     try {
       const result = await api.fetchList()
-      console.log('resultmobx', result)
       // after await, modifying state again, needs an actions:
       runInAction(() => {
-        this.state = 'done'
+        this.loading = false
         this.commands = result.data
       })
     } catch (error) {
       runInAction(() => {
-        this.state = 'error'
+        this.loading = false
+        this.error = error
       })
     }
   }
 
   createCommand = async payload => {
-    this.state = 'pending'
+    this.loading = true
     try {
       const result = await api.create(payload)
       runInAction(() => {
-        this.state = 'done'
+        this.loading = false
         this.commands = [...this.commands, result.data]
       })
     } catch (error) {
       runInAction(() => {
-        this.state = 'error'
+        this.loading = false
+        this.error = error
       })
     }
   }
 
   updateCommand = async payload => {
-    this.state = 'pending'
+    this.loading = true
     try {
       const result = await api.update(payload)
       runInAction(() => {
-        this.state = 'done'
+        this.loading = false
         this.commands = [
           ...this.commands.filter(command => command._id !== payload.commandId),
           result.data,
@@ -53,22 +54,24 @@ export class CommandsStore {
       })
     } catch (error) {
       runInAction(() => {
-        this.state = 'error'
+        this.loading = false
+        this.error = error
       })
     }
   }
 
   deleteCommand = async id => {
-    this.state = 'pending'
+    this.loading = true
     try {
       const result = await api.remove(id)
       runInAction(() => {
-        this.state = 'done'
+        this.loading = false
         this.commands = this.commands.filter(command => command._id !== id)
       })
     } catch (error) {
       runInAction(() => {
-        this.state = 'error'
+        this.loading = false
+        this.error = error
       })
     }
   }
@@ -79,4 +82,6 @@ decorate(CommandsStore, {
   state: observable,
   fetchCommands: action,
   createCommand: action,
+  updateCommand: action,
+  deleteCommand: action,
 })
