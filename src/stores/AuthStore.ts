@@ -4,11 +4,11 @@ import * as api from 'Api/auth'
 export class AuthStore {
   constructor() {}
 
-  successMessage = {}
-  loading = false
-  error = {}
+  successMessage:any = {}
+  loading:any = false
+  error:any = {}
 
-  register = async payload => {
+  register = async (payload:any) => {
     this.loading = true
     try {
       const { values, onSuccess } = payload;
@@ -26,7 +26,7 @@ export class AuthStore {
     }
   }
 
-  login = async payload => {
+  login = async (payload:any) => {
     this.loading = true
     try {
       const { values, authLogin } = payload;
@@ -46,7 +46,7 @@ export class AuthStore {
   }
 }
 
-decorate(AuthStore, {
+decorate<any>(AuthStore, {
   successMessage: observable,
   loading: observable,
   register: action,

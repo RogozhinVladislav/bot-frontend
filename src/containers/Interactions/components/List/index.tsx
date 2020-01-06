@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { List, Skeleton, Switch, Meta, Card, Icon, Avatar } from 'antd'
+import { List, Skeleton, Switch, Card, Icon, Avatar } from 'antd'
 
-export default function CommandList({ commands }) {
+export default function CommandList({ commands }:any) {
   return (
     <List
       itemLayout="vertical"
       dataSource={commands}
-      renderItem={command => (
+      renderItem={(command:any) => (
         <List.Item
           actions={[
             <Icon type="setting" key="setting" />,

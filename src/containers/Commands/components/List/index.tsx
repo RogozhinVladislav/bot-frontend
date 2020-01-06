@@ -6,12 +6,12 @@ import { CommandsContext } from '@/contexts'
 export default function CommandList() {
   let { path, url } = useRouteMatch()
   let history = useHistory()
-  const { commands, deleteCommand } = useContext(CommandsContext)
+  const { commands, deleteCommand }:any = useContext(CommandsContext)
   return (
     <List
       itemLayout="vertical"
       dataSource={commands}
-      renderItem={command => (
+      renderItem={(command:any) => (
         <List.Item
           actions={[
             <Icon

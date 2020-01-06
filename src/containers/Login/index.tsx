@@ -8,21 +8,21 @@ import { AuthContext } from '@/contexts/auth-context'
 
 import styles from './styles'
 
-function Login({ form }) {
+function Login({ form }:any) {
   const { authStore } = useStores()
   const auth = useContext(AuthContext)
   const { loading } = authStore;
   const { getFieldDecorator, validateFields } = form
 
   const submit = () => {
-    validateFields((err, values) => {
+    validateFields((err:any, values:any) => {
       if (!err) {
         authStore.login({values, authLogin: auth.login })
       }
     })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:any) => {
     e.preventDefault()
     submit()
   }

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-const storageName = 'userData'
+const storageName:string = 'userData'
 
 export const useAuth = () => {
   const [token, setToken] = useState(null)
@@ -21,7 +21,7 @@ export const useAuth = () => {
   }, [])
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(storageName))
+    const data = JSON.parse(localStorage.getItem(storageName) || '')
 
     if (data && data.token) {
       login(data.token, data.userId)

@@ -4,9 +4,9 @@ import * as api from 'Api/commands'
 export class CommandsStore {
   constructor() {}
 
-  commands = []
-  loading = false
-  error = {}
+  commands:any[] = []
+  loading: any = false
+  error: any = {}
 
   fetchCommands = async () => {
     this.loading = true
@@ -25,7 +25,7 @@ export class CommandsStore {
     }
   }
 
-  createCommand = async payload => {
+  createCommand = async (payload:any) => {
     this.loading = true
     try {
       const result = await api.create(payload)
@@ -41,7 +41,7 @@ export class CommandsStore {
     }
   }
 
-  updateCommand = async payload => {
+  updateCommand = async (payload:any) => {
     this.loading = true
     try {
       const result = await api.update(payload)
@@ -60,7 +60,7 @@ export class CommandsStore {
     }
   }
 
-  deleteCommand = async id => {
+  deleteCommand = async (id:number) => {
     this.loading = true
     try {
       const result = await api.remove(id)
@@ -77,7 +77,7 @@ export class CommandsStore {
   }
 }
 
-decorate(CommandsStore, {
+decorate<any>(CommandsStore, {
   commands: observable,
   state: observable,
   fetchCommands: action,
