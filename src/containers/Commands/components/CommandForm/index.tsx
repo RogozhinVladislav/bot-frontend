@@ -5,13 +5,13 @@ import { CommandsContext } from '@/contexts'
 const allowedImageTypes = ['image/png', 'image/jpg', 'image/jpeg']
 const allowedAudioTypes = ['audio/mp3']
 
-function CommandForm({ form, command }) {
+function CommandForm({ form, command }:any) {
   const { getFieldDecorator, validateFields } = form
-  const [fileList, setFileList] = useState([])
-  const { createCommand, updateCommand } = useContext(CommandsContext)
+  const [fileList, setFileList]:any = useState([])
+  const { createCommand, updateCommand }:any = useContext(CommandsContext)
 
   const submit = () => {
-    validateFields((err, values) => {
+    validateFields((err:any, values:any) => {
       if (!err) {
         if (command) {
           updateCommand({
@@ -20,7 +20,7 @@ function CommandForm({ form, command }) {
           })
         } else {
           const formData = new FormData()
-          fileList.forEach(file => {
+          fileList.forEach((file:any) => {
             if (allowedImageTypes.includes(file.type)) {
               formData.append('image', file)
             } else if (allowedAudioTypes.includes(file.type)) {
@@ -37,8 +37,8 @@ function CommandForm({ form, command }) {
   }
 
   const uploadProps = {
-    onRemove: file => {
-      setFileList(state => {
+    onRemove: (file:any) => {
+      setFileList((state:any) => {
         {
           const index = state.fileList.indexOf(file)
           const newFileList = state.fileList.slice()
@@ -49,8 +49,8 @@ function CommandForm({ form, command }) {
         }
       })
     },
-    beforeUpload: file => {
-      setFileList(state => {
+    beforeUpload: (file:any) => {
+      setFileList((state:any) => {
         return [...state, file]
       })
       return false
@@ -58,7 +58,7 @@ function CommandForm({ form, command }) {
     fileList,
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:any) => {
     e.preventDefault()
     submit()
   }
@@ -103,6 +103,6 @@ function CommandForm({ form, command }) {
   )
 }
 
-const WrappedCommandForm = Form.create({ name: 'CommandForm' })(CommandForm)
+const WrappedCommandForm:any = Form.create({ name: 'CommandForm' })(CommandForm)
 
 export default WrappedCommandForm

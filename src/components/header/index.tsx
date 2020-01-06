@@ -4,7 +4,7 @@ import { PageHeader, Menu, Avatar } from 'antd'
 
 const { SubMenu } = Menu
 
-export default function Header({ username, avatar }) {
+export default function Header({ username, avatar }:any) {
   let { path, url } = useRouteMatch()
   return (
     <PageHeader

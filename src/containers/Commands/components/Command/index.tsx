@@ -9,15 +9,15 @@ export default function Command() {
   const history = useHistory()
   const { commandId } = useParams()
   const [visible, setVisible] = useState()
-  const { commands, updateCommand } = useContext(CommandsContext)
+  const { commands, updateCommand }:any = useContext(CommandsContext)
 
-  const command = commands.find(cmd => cmd._id === commandId)
+  const command = commands.find((cmd:any) => cmd._id === commandId)
 
-  const handleOk = e => {
+  const handleOk = (e:any) => {
     setVisible(false)
   }
 
-  const handleCancel = e => {
+  const handleCancel = (e:any) => {
     // history.push("/commands");
     history.goBack()
   }
@@ -31,7 +31,7 @@ export default function Command() {
       // okButtonProps={{ disabled: true }}
       // cancelButtonProps={{ disabled: true }}
     >
-      <CommandForm updateCommand={updateCommand} command={command} handleOk={handleOk} />
+      <CommandForm command={command} handleOk={handleOk} />
     </Modal>
   )
 }

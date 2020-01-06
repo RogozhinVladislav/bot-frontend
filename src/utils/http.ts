@@ -6,6 +6,6 @@ const http = axios.create({
   headers: {},
 })
 
-http.init = () => {}
+// http.init = () => {}
 
 export default http

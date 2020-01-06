@@ -52,7 +52,7 @@ export default function Home() {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Header />
+        <Header username="" avatar="" />
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
             <Switch>

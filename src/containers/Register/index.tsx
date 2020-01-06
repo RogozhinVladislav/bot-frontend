@@ -24,7 +24,7 @@ const Register = observer(({ form }) => {
   }, [successMessage])
 
   const submit = () => {
-    validateFields((err, values) => {
+    validateFields((err:any, values:any) => {
       if (!err) {
         authStore.register({ values, onSuccess: () => {
           history.push("/login");
@@ -33,24 +33,24 @@ const Register = observer(({ form }) => {
     })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:any) => {
     e.preventDefault()
     submit()
   }
 
-  const validateToNextPassword = (rule, value, callback) => {
+  const validateToNextPassword = (rule:any, value:any, callback:any) => {
     if (value && confirmDirty) {
       form.validateFields(['confirm'], { force: true })
     }
     callback()
   }
 
-  const handleConfirmBlur = e => {
+  const handleConfirmBlur = (e:any) => {
     const { value } = e.target
     setConfirmDirty(confirmDirty || !!value)
   }
 
-  const compareToFirstPassword = (rule, value, callback) => {
+  const compareToFirstPassword = (rule:any, value:any, callback:any) => {
     if (value && value !== form.getFieldValue('password')) {
       callback('Введённые пароли не совпадают!')
     } else {

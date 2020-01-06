@@ -2,12 +2,12 @@ import React from 'react'
 import http from '@/utils/http'
 import { Form, Input, Button } from 'antd'
 
-function CreateInteractionForm({ form }) {
+function CreateInteractionForm({ form }:any) {
   const { getFieldDecorator, validateFields } = form
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault()
-    validateFields(async (err, values) => {
+    validateFields(async (err:any, values:any) => {
       if (!err) {
         console.log('Received values of form: ', values)
         const result = await http.post('/interactions', values)
