@@ -3,14 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
 import App from '@/containers/App'
 
-// import 'antd/dist/antd.css'
-// import './styles/index.css'
+import 'antd/dist/antd.css'
+import './styles/index.css'
 
-// ReactDOM.render(<App />, document.querySelector('#root'))
-
-
-const render = (Component: React.ComponentType) => {
-  ReactDOM.render(<Component />, document.getElementById('root'))
-}
-
-render(App)
+ReactDOM.render(<App />, document.querySelector('#root'))
