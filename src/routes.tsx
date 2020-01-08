@@ -4,7 +4,7 @@ import { Home } from './containers/Home'
 import { Login } from './containers/Login'
 import { Register } from './containers/Register'
 
-export const useRoutes = (isAuthenticated: any) => {
+export const useRoutes = (isAuthenticated: boolean) => {
   if (isAuthenticated) {
     return (
       <Switch>
