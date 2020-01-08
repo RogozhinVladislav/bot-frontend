@@ -60,7 +60,7 @@ export class CommandsStore {
     }
   }
 
-  deleteCommand = async (id:number) => {
+  deleteCommand = async (id: string) => {
     this.loading = true
     try {
       const result = await api.remove(id)

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import Home from './containers/Home'
-import Login from './containers/Login'
-import Register from './containers/Register'
+import { Home } from './containers/Home'
+import { Login } from './containers/Login'
+import { Register } from './containers/Register'
 
 export const useRoutes = (isAuthenticated: any) => {
   if (isAuthenticated) {
@@ -16,9 +16,10 @@ export const useRoutes = (isAuthenticated: any) => {
 
   return (
     <Switch>
-      <Redirect exact from="/" to="/login" />
+      {/* <Redirect exact from="/" to="/login" /> */}
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Redirect to="/login" />
     </Switch>
   )
 }

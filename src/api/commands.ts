@@ -1,10 +1,11 @@
 import http from '@/utils/http'
+import { ICommand } from '@/typings/commands';
 
 export const fetchList = () => http.get('/commands')
-export const create = (command:any) => http.post('/commands', command, {
+export const create = (command: ICommand) => http.post('/commands', command, {
   headers: {
     'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
   },
 })
-export const update = ({ commandId, command }:any) => http.put(`/commands/${commandId}`, command)
-export const remove = (id:any) => http.delete(`/commands/${id}`)
+export const update = ({ commandId, command }: { commandId: string, command: ICommand }) => http.put(`/commands/${commandId}`, command)
+export const remove = (id: string) => http.delete(`/commands/${id}`)

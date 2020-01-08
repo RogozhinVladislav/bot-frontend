@@ -3,14 +3,14 @@ import { Route, Switch, Link, useRouteMatch, useParams } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
 const { Content, Footer, Sider } = Layout
 
-import Header from '@/components/header'
+import { Header } from '@/components/header'
 
-import Commands from '../Commands'
-import Interactions from '../Interactions'
+import { Commands } from '../Commands'
+import { Interactions } from '../Interactions'
 
 import styles from './styles'
 
-export default function Home() {
+export function Home() {
   let { path, url } = useRouteMatch()
   return (
     <Layout>
@@ -52,7 +52,7 @@ export default function Home() {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 200 }}>
-        <Header username="" avatar="" />
+        <Header />
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
             <Switch>

@@ -1,17 +1,25 @@
 import React, { useState, useContext } from 'react'
 import { Form, Input, Button, Upload, Icon } from 'antd'
-import { CommandsContext } from '@/contexts'
+import { CommandsContext, ICommandContext } from '@/contexts/commands-context'
+
+import { FormComponentProps } from 'antd/lib/form'
+import { ICommand } from '@/typings/commands';
+import { UploadFile } from 'antd/lib/upload/interface';
+
+interface ICommandFormProps extends FormComponentProps {
+  command: ICommand
+}
 
 const allowedImageTypes = ['image/png', 'image/jpg', 'image/jpeg']
 const allowedAudioTypes = ['audio/mp3']
 
-function CommandForm({ form, command }:any) {
+function _CommandForm({ form, command }: ICommandFormProps) {
   const { getFieldDecorator, validateFields } = form
-  const [fileList, setFileList]:any = useState([])
-  const { createCommand, updateCommand }:any = useContext(CommandsContext)
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+  const { createCommand, updateCommand } = useContext<ICommandContext>(CommandsContext)
 
   const submit = () => {
-    validateFields((err:any, values:any) => {
+    validateFields((err, values) => {
       if (!err) {
         if (command) {
           updateCommand({
@@ -20,11 +28,11 @@ function CommandForm({ form, command }:any) {
           })
         } else {
           const formData = new FormData()
-          fileList.forEach((file:any) => {
+          fileList.forEach((file: any) => {
             if (allowedImageTypes.includes(file.type)) {
-              formData.append('image', file)
+              formData.append('image', file.originFileObj)
             } else if (allowedAudioTypes.includes(file.type)) {
-              formData.append('audio', file)
+              formData.append('audio', file.originFileObj)
             }
           })
           for (const key in values) {
@@ -37,28 +45,26 @@ function CommandForm({ form, command }:any) {
   }
 
   const uploadProps = {
-    onRemove: (file:any) => {
-      setFileList((state:any) => {
+    onRemove: (file: UploadFile) => {
+      setFileList((prevFileList: UploadFile[]) => {
         {
-          const index = state.fileList.indexOf(file)
-          const newFileList = state.fileList.slice()
+          const index = prevFileList.indexOf(file)
+          const newFileList: UploadFile[] = prevFileList.slice()
           newFileList.splice(index, 1)
-          return {
-            fileList: newFileList,
-          }
+          return newFileList
         }
       })
     },
-    beforeUpload: (file:any) => {
-      setFileList((state:any) => {
-        return [...state, file]
+    beforeUpload: (file: UploadFile) => {
+      setFileList((prevFileList: UploadFile[]) => {
+        return [...prevFileList, file]
       })
       return false
     },
     fileList,
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     submit()
   }
@@ -103,6 +109,6 @@ function CommandForm({ form, command }:any) {
   )
 }
 
-const WrappedCommandForm:any = Form.create({ name: 'CommandForm' })(CommandForm)
 
-export default WrappedCommandForm
+
+export const CommandForm: any = Form.create({ name: 'CommandForm' })(_CommandForm)

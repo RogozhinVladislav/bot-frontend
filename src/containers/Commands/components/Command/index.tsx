@@ -2,23 +2,24 @@ import React, { useState, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Modal, Button } from 'antd'
 
-import CommandForm from '../CommandForm'
-import { CommandsContext } from '@/contexts'
+import { CommandForm } from '../CommandForm'
+import { CommandsContext } from '@/contexts/commands-context'
 
-export default function Command() {
+import { ICommand } from '@/typings/commands';
+
+export function Command() {
   const history = useHistory()
   const { commandId } = useParams()
   const [visible, setVisible] = useState()
-  const { commands, updateCommand }:any = useContext(CommandsContext)
+  const { commands } = useContext(CommandsContext)
 
-  const command = commands.find((cmd:any) => cmd._id === commandId)
+  const command: ICommand | undefined = commands.find((cmd: ICommand) => cmd._id === commandId)
 
-  const handleOk = (e:any) => {
+  const handleOk = () => {
     setVisible(false)
   }
 
-  const handleCancel = (e:any) => {
-    // history.push("/commands");
+  const handleCancel = () => {
     history.goBack()
   }
 

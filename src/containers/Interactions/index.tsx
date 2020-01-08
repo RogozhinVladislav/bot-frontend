@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import List from './components/List'
-import CommandForm from './components/CreateInteractionForm'
+import { CreateInteractionForm } from './components/CreateInteractionForm'
 import http from '@/utils/http'
 
-export default function interaction() {
+export function Interactions() {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function interaction() {
   return (
     <div>
       <h1>Создание взаимодействия</h1>
-      <CommandForm />
+      <CreateInteractionForm />
       <List commands={data} />
     </div>
   )

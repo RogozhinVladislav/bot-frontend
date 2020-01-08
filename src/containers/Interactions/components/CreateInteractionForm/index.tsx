@@ -2,7 +2,7 @@ import React from 'react'
 import http from '@/utils/http'
 import { Form, Input, Button } from 'antd'
 
-function CreateInteractionForm({ form }:any) {
+function _CreateInteractionForm({ form }:any) {
   const { getFieldDecorator, validateFields } = form
 
   const handleSubmit = async (e:any) => {
@@ -38,8 +38,8 @@ function CreateInteractionForm({ form }:any) {
   )
 }
 
-const WrappedCreateInteractionForm = Form.create({
-  name: 'сreateInteractionForm',
-})(CreateInteractionForm)
 
-export default WrappedCreateInteractionForm
+
+export const CreateInteractionForm = Form.create({
+  name: 'сreateInteractionForm',
+})(_CreateInteractionForm)

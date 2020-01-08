@@ -3,16 +3,19 @@ import { useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { Form, Icon, Input, Button, Checkbox, Typography, Tooltip } from 'antd'
 const { Title } = Typography
+import { FormComponentProps } from 'antd/lib/form'
 import { useStores, useMessage } from '@/hooks'
 import styles from './styles'
 import { Link } from 'react-router-dom'
 
-const Register = observer(({ form }) => {
+interface IRegisterProps extends FormComponentProps {}
+
+const _Register = observer(({ form }: IRegisterProps) => {
   const history = useHistory()
   const { authStore } = useStores()
   const { loading, error, successMessage } = authStore
   const { getFieldDecorator, validateFields } = form
-  const [confirmDirty, setConfirmDirty] = useState(false)
+  const [confirmDirty, setConfirmDirty] = useState<Boolean>(false)
   const showMessage = useMessage()
 
   useEffect(() => {
@@ -24,33 +27,34 @@ const Register = observer(({ form }) => {
   }, [successMessage])
 
   const submit = () => {
-    validateFields((err:any, values:any) => {
+    validateFields(async (err, values): Promise<any> => {
       if (!err) {
-        authStore.register({ values, onSuccess: () => {
+        const { confirm, ...restValues } = values
+        authStore.register({ values: restValues, onSuccess: () => {
           history.push("/login");
         } })
       }
     })
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent<any>): void => {
     e.preventDefault()
     submit()
   }
 
-  const validateToNextPassword = (rule:any, value:any, callback:any) => {
+  const validateToNextPassword = (rule:any, value:string, callback:Function) => {
     if (value && confirmDirty) {
       form.validateFields(['confirm'], { force: true })
     }
     callback()
   }
 
-  const handleConfirmBlur = (e:any) => {
-    const { value } = e.target
+  const handleConfirmBlur = (e: React.FormEvent<HTMLInputElement>): void => {
+    const { value } = e.currentTarget
     setConfirmDirty(confirmDirty || !!value)
   }
 
-  const compareToFirstPassword = (rule:any, value:any, callback:any) => {
+  const compareToFirstPassword = (rule:any, value:string, callback:Function) => {
     if (value && value !== form.getFieldValue('password')) {
       callback('Введённые пароли не совпадают!')
     } else {
@@ -140,6 +144,4 @@ const Register = observer(({ form }) => {
   )
 })
 
-const WrappedRegister = Form.create({ name: 'Register' })(Register)
-
-export default WrappedRegister
+export const Register = Form.create({ name: 'Register' })(_Register)

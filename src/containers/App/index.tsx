@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { useRoutes } from '../../routes'
-import { useAuth } from '@/hooks/auth.hook'
+import { useAuth } from '@/hooks/use-auth'
 import { AuthContext } from '@/contexts/auth-context'
 
 export default function App() {

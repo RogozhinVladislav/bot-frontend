@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --debug",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
     "check-types": "tsc"
   },

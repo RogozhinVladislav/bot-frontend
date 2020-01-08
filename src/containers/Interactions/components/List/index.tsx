@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { List, Skeleton, Switch, Card, Icon, Avatar } from 'antd'
+import { List, Skeleton, Switch, Card, Icon } from 'antd'
 
 export default function CommandList({ commands }:any) {
   return (

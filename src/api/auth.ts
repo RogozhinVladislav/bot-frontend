@@ -1,4 +1,6 @@
 import http from '@/utils/http'
 
-export const register = (payload:any) => http.post('/auth/register', payload)
-export const login = (payload:any) => http.post('/auth/login', payload)
+import { ILoginParams, IRegisterParams } from '@/typings/auth';
+
+export const register = (payload: IRegisterParams["values"]) => http.post('/auth/register', payload)
+export const login = (payload: ILoginParams["values"]) => http.post('/auth/login', payload)

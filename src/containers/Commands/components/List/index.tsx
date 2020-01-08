@@ -1,18 +1,20 @@
 import React, { useContext } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { List, Icon, Popconfirm } from 'antd'
-import { CommandsContext } from '@/contexts'
+import { CommandsContext } from '@/contexts/commands-context'
+import { ICommand } from '@/typings/commands'
 
-export default function CommandList() {
+export function CommandList() {
   let { path, url } = useRouteMatch()
   let history = useHistory()
-  const { commands, deleteCommand }:any = useContext(CommandsContext)
+  const { commands, deleteCommand } = useContext(CommandsContext)
   return (
     <List
       itemLayout="vertical"
       dataSource={commands}
-      renderItem={(command:any) => (
+      renderItem={(command: ICommand) => (
         <List.Item
+          key={command._id}
           actions={[
             <Icon
               type="setting"

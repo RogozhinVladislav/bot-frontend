@@ -4,7 +4,7 @@ import { PageHeader, Menu, Avatar } from 'antd'
 
 const { SubMenu } = Menu
 
-export default function Header({ username, avatar }:any) {
+export const Header: React.FunctionComponent = () => {
   let { path, url } = useRouteMatch()
   return (
     <PageHeader
@@ -12,9 +12,9 @@ export default function Header({ username, avatar }:any) {
         border: '1px solid rgb(235, 237, 240)',
       }}
       onBack={() => window.history.back()}
-      title="Title"
+      title="Title123"
       subTitle="This is a subtitle"
-      extra={[<Avatar size="large" icon="user"></Avatar>]}
+      extra={[<Avatar key={1} size="large" icon="user"></Avatar>]}
     ></PageHeader>
   )
 }

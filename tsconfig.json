@@ -20,6 +20,10 @@
       "Api/*": ["src/api/*"],
       "@/*": ["src/*"]
     },
-    "jsx": "react"
+    "jsx": "react",
 	},
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

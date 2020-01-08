@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
-import { CommandsContext } from '@/contexts'
-import List from './components/List'
-import CommandForm from './components/CommandForm'
-import Command from './components/Command'
+import { CommandsContext } from '@/contexts/commands-context'
+import { CommandList } from './components/List'
+import { CommandForm } from './components/CommandForm'
+import { Command } from './components/Command'
 
 import { useStores } from '@/hooks'
 
-const Commands = observer(props => {
+export const Commands = observer(props => {
   let { path } = useRouteMatch()
   const { commandsStore } = useStores()
 
@@ -26,7 +26,7 @@ const Commands = observer(props => {
       <div>
         <h1>Создание команды</h1>
         <CommandForm />
-        <List />
+        <CommandList />
 
         <Switch>
           <Route exact path={path}>
@@ -40,5 +40,3 @@ const Commands = observer(props => {
     </CommandsContext.Provider>
   )
 })
-
-export default Commands

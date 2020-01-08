@@ -2,27 +2,30 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox, Typography  } from 'antd'
 const { Title } = Typography;
+import { FormComponentProps } from 'antd/lib/form'
 
 import { useStores } from '@/hooks'
 import { AuthContext } from '@/contexts/auth-context'
 
 import styles from './styles'
 
-function Login({ form }:any) {
+interface ILoginProps extends FormComponentProps {}
+
+function _Login({ form }: ILoginProps) {
   const { authStore } = useStores()
   const auth = useContext(AuthContext)
   const { loading } = authStore;
   const { getFieldDecorator, validateFields } = form
 
   const submit = () => {
-    validateFields((err:any, values:any) => {
+    validateFields(async (err, values): Promise<any> => {
       if (!err) {
         authStore.login({values, authLogin: auth.login })
       }
     })
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent<any>): void => {
     e.preventDefault()
     submit()
   }
@@ -72,6 +75,4 @@ function Login({ form }:any) {
   )
 }
 
-const WrappedLogin = Form.create({ name: 'Login' })(Login)
-
-export default WrappedLogin
+export const Login = Form.create({ name: 'Login' })(_Login)
