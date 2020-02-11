@@ -109,6 +109,6 @@ function _CommandForm({ form, command }: ICommandFormProps) {
   )
 }
 
-
+_CommandForm.displayName = 'CommandForm'
 
 export const CommandForm: any = Form.create({ name: 'CommandForm' })(_CommandForm)
